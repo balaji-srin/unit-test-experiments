@@ -1,1 +1,2 @@
-# unit-test-experiments
+# Experiments with unit tests for embedded software 
+
