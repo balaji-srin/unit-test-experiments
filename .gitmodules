@@ -1,3 +1,6 @@
 [submodule "fff"]
 	path = fff
-	url = git@github.com:meekrosoft/fff.git
+	url = https://github.com/meekrosoft/fff.git
+[submodule "Unity"]
+	path = Unity
+	url = https://github.com/ThrowTheSwitch/Unity.git
