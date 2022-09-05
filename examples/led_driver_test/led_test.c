@@ -33,6 +33,5 @@ int main(void)
 
 	RUN_TEST(test_when_led_init_is_called_it_calls_gpio_init_and_returns_success);
 
-	UNITY_END();
-	return 0;
+	return UNITY_END();
 }
