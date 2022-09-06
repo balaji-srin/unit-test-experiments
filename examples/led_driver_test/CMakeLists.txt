@@ -21,6 +21,10 @@ target_sources(led_driver_test PRIVATE ${WORKSPACE_ROOT}/Unity/src/unity.c)
 add_custom_target(
 	unittest
 	DEPENDS led_driver_test
-	COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/led_driver_test
+	COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test
 )
+
+target_compile_options(led_driver_test PRIVATE "--coverage")
+target_link_options(led_driver_test PRIVATE "--coverage")
+
 add_test(NAME led_driver_test COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test)

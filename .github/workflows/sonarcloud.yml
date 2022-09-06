@@ -43,9 +43,19 @@ jobs:
       - name: Run build-wrapper
         run: |
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake . && cmake --build .
+      - name: Install deps
+        run: sudo apt install -y lcov
+      - name: Run unit test and generate coverage file
+        run: |
+          ctest .
+          lcov --directory . --capture --rc lcov_branch_coverage=1 -q --output-file coverage.info --exclude '*unity.c'
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner -Dsonar.projectKey=balaji-nordic_unit-test-experiments -Dsonar.organization=balaji-nordic --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          sonar-scanner --define sonar.projectKey=balaji-nordic_unit-test-experiments \
+                        --define sonar.organization=balaji-nordic \
+                        --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
+                        --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
+                        --define sonar.cfamily.gcov.reportsPath="."
