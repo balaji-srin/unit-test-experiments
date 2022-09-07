@@ -43,12 +43,15 @@ jobs:
       - name: Run build-wrapper
         run: |
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake . && cmake --build .
-      - name: Install deps
-        run: sudo apt install -y lcov
-      - name: Run unit test and generate coverage file
+      - name: Run unit tests
         run: |
           ctest .
-          lcov --directory . --capture --rc lcov_branch_coverage=1 -q --output-file coverage.info --exclude '*unity.c'
+      - name: Generate Gcov files
+        run: |
+          mkdir gcov_reports_dir
+          cd gcov_reports_dir
+          find .. -name '*.o' | xargs gcov --preserve-paths
+          cd ..
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,4 +61,5 @@ jobs:
                         --define sonar.organization=balaji-nordic \
                         --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
                         --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
-                        --define sonar.cfamily.gcov.reportsPath="."
+                        --define sonar.cfamily.gcov.reportsPath="gcov_reports_dir"
+
