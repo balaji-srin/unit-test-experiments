@@ -16,6 +16,7 @@ void setUp(void)
 
 void tearDown(void)
 {
+	/* Do nothing. */
 }
 
 void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
