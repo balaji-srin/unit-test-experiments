@@ -4,5 +4,6 @@ This repo contains simple unit tests to demonstrate how to use unity and fff for
 
 Also contained here are some basic github workflows.
 
-[![CMake](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/cmake.yml/badge.svg)](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/cmake.yml)
+[![Compile and unit test](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/compile_and_test.yml/badge.svg)](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/compile_and_test.yml)
 [![CodeSonar](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/sonarcloud.yml)
+[![clang-format Check](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/clangformat.yml/badge.svg)](https://github.com/balaji-nordic/unit-test-experiments/actions/workflows/clangformat.yml)
