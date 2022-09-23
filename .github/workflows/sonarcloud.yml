@@ -39,7 +39,7 @@ jobs:
       - name: Init submodules
         run: |
           git submodule init
-          git submodule update
+          git submodule update --init --recursive
       - name: Configure CMake
         run: cmake .
       - name: Run build-wrapper
