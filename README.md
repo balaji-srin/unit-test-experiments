@@ -1,6 +1,6 @@
 # Experiments with unit tests for embedded software 
 
-This repo contains simple unit tests to demonstrate how to use unity and fff for testing embedded applications.
+This repo contains simple unit tests to demonstrate how to use the unity test framework and the mocking frameworks CMock and fff for testing embedded applications.
 
 Also contained here are some basic github workflows.
 
