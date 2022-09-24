@@ -1,1 +1,2 @@
 add_subdirectory(led_driver_test_fff)
+add_subdirectory(led_driver_test_cmock)
