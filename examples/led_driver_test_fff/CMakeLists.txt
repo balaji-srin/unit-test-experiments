@@ -22,7 +22,7 @@ add_custom_target(
 	COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_fff
 )
 
-target_compile_options(led_driver_test_fff PRIVATE "--coverage")
+target_compile_options(led_driver_test_fff PRIVATE -g -Wall -O0 --coverage)
 target_link_options(led_driver_test_fff PRIVATE "--coverage")
 
 add_test(NAME led_driver_test_fff COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_fff)

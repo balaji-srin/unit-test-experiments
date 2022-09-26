@@ -3,4 +3,6 @@
 
 int led_init(void);
 
+int led_fancy_blink(void);
+
 #endif

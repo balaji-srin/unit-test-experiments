@@ -8,6 +8,7 @@ set(WORKSPACE_ROOT ${PROJECT_SOURCE_DIR}/../../)
 add_executable(led_driver_test_cmock led_test.c)
 
 cmock_manage(${PROJECT_NAME} ${WORKSPACE_ROOT}/drivers/gpio.h)
+cmock_manage(${PROJECT_NAME} ${WORKSPACE_ROOT}/drivers/variadic_module.h)
 
 target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/uut/include)
 target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/Unity/src)
