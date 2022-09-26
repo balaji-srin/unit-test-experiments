@@ -15,9 +15,11 @@ function(cmock_manage target header_file_path)
 		COMMAND
 		ruby
 		${CMOCK_DIR}/lib/cmock.rb
+		-o${CMAKE_CURRENT_LIST_DIR}/cmock_cfg.yaml
 		${header_file_path}
 		--mock_prefix=mock_
 		--mock_path=${CMAKE_CURRENT_BINARY_DIR}/mocks
+		DEPENDS ${CMAKE_CURRENT_LIST_DIR}/cmock_cfg.yaml
 	)
 	# Include the above generated file to the target
 	target_sources(${target} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/mocks/mock_${file_to_mock}.c)

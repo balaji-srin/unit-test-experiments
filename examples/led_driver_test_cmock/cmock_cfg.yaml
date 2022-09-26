@@ -1,0 +1,4 @@
+:cmock:
+    :strippables:
+        # Disable mocking of variadic function variadic_module_get
+        - ['(?:variadic_module_get\s*\(+.*?\)+)']
