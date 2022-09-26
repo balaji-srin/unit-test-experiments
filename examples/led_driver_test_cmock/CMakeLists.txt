@@ -7,21 +7,7 @@ set(WORKSPACE_ROOT ${PROJECT_SOURCE_DIR}/../../)
 
 add_executable(led_driver_test_cmock led_test.c)
 
-
-add_custom_command(
-	OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mocks/mock_gpio.c
-	COMMAND
-	ruby
-	${WORKSPACE_ROOT}/CMock/lib/cmock.rb
-	${WORKSPACE_ROOT}/drivers/gpio.h
-	--mock_prefix=mock_
-	--mock_path=${CMAKE_CURRENT_BINARY_DIR}/mocks
-)
-
-target_include_directories(led_driver_test_cmock PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/mocks)
-target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/CMock/src)
-target_sources(led_driver_test_cmock PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/mocks/mock_gpio.c)
-target_sources(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/CMock/src/cmock.c)
+cmock_manage(${PROJECT_NAME} ${WORKSPACE_ROOT}/drivers/gpio.h)
 
 target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/uut/include)
 target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/Unity/src)
