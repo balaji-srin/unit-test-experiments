@@ -8,6 +8,8 @@
 #include "mock_gpio.h"
 #include "mock_variadic_module.h"
 
+static uint8_t variadic_module_get_called_count;
+
 /* Stub for variadic_module_get since CMock does not mock variadic functions. */
 int variadic_module_get(uint8_t count, const char *fmt, ...)
 {
@@ -29,6 +31,8 @@ int variadic_module_get(uint8_t count, const char *fmt, ...)
 					     "String length not sufficient");
 	strcpy(str, test_string);
 
+	variadic_module_get_called_count++;
+
 	return 0;
 }
 
@@ -44,23 +48,27 @@ void tearDown(void)
 	mock_variadic_module_Verify();
 }
 
-void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
+static void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
 {
 	gpio_init_ExpectAndReturn(0);
 
 	TEST_ASSERT_EQUAL(0, led_init());
 }
 
-void test_when_gpio_init_returns_failure_led_init_returns_failure(void)
+static void test_when_gpio_init_returns_failure_led_init_returns_failure(void)
 {
 	gpio_init_ExpectAndReturn(-1);
 
 	TEST_ASSERT_EQUAL(-1, led_init());
 }
 
-void test_when_led_fancy_blink_is_called_variadic_module_get_is_called(void)
+static void test_when_led_fancy_blink_is_called_variadic_module_get_is_called(void)
 {
+	variadic_module_init_Expect();
 	TEST_ASSERT_EQUAL(0, led_fancy_blink());
+
+	/* Also assert that the custom variadic stub was called once. */
+	TEST_ASSERT_EQUAL(1, variadic_module_get_called_count);
 }
 
 int main(void)

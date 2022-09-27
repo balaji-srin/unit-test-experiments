@@ -18,4 +18,8 @@
  */
 int variadic_module_get(uint8_t count, const char *fmt, ...);
 
+/** Init variadic module.
+ */
+void variadic_module_init(void);
+
 #endif
