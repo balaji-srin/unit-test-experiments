@@ -81,6 +81,35 @@ static void test_when_led_light_up_is_called_the_get_inline_is_called(void)
 	led_light_up();
 }
 
+/* Tests that demonstrate how to validate multiple parms and return array by pointer. */
+static void test_when_gpio_config_returns_MagicName_led_config_returns_0(void)
+{
+	const uint8_t exp_name_len = 10;
+	const uint8_t exp_level = 1;
+	const uint8_t exp_drive = 2;
+	char name_to_return[] = "MagicName";
+
+	gpio_config_ExpectAndReturn(NULL, exp_name_len, exp_level, exp_drive, 0);
+	gpio_config_IgnoreArg_name();
+	gpio_config_ReturnArrayThruPtr_name(name_to_return, sizeof(name_to_return));
+
+	TEST_ASSERT_EQUAL(0, led_config());
+}
+
+static void test_when_gpio_config_does_not_return_MagicName_led_config_returns_minus_one(void)
+{
+	const uint8_t exp_name_len = 10;
+	const uint8_t exp_level = 1;
+	const uint8_t exp_drive = 2;
+	char name_to_return[] = "NotMagic";
+
+	gpio_config_ExpectAndReturn(NULL, exp_name_len, exp_level, exp_drive, 0);
+	gpio_config_IgnoreArg_name();
+	gpio_config_ReturnArrayThruPtr_name(name_to_return, sizeof(name_to_return));
+
+	TEST_ASSERT_EQUAL(-1, led_config());
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -89,6 +118,8 @@ int main(void)
 	RUN_TEST(test_when_gpio_init_returns_failure_led_init_returns_failure);
 	RUN_TEST(test_when_led_fancy_blink_is_called_variadic_module_get_is_called);
 	RUN_TEST(test_when_led_light_up_is_called_the_get_inline_is_called);
+	RUN_TEST(test_when_gpio_config_returns_MagicName_led_config_returns_0);
+	RUN_TEST(test_when_gpio_config_does_not_return_MagicName_led_config_returns_minus_one);
 
 	return UNITY_END();
 }

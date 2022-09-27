@@ -18,7 +18,6 @@ target_include_directories(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/drive
 target_sources(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/uut/src/led.c)
 target_sources(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/Unity/src/unity.c)
 
-target_compile_options(led_driver_test_cmock PRIVATE "--coverage")
 target_link_options(led_driver_test_cmock PRIVATE "--coverage")
 
 add_test(NAME led_driver_test_cmock COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_cmock)

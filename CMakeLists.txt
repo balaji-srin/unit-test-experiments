@@ -32,7 +32,7 @@ function(cmock_manage target header_file_path)
 	target_include_directories(${target} PRIVATE ${CMOCK_DIR}/src)
 endfunction()
 
-add_compile_options(-Werror)
+add_compile_options(-Werror -Wall -g -O0 --coverage)
 
 add_subdirectory(examples)
 
