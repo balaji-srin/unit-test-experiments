@@ -1,6 +1,7 @@
+#include <stddef.h>
 #include "gpio.h"
-#include "stddef.h"
 #include "variadic_module.h"
+#include "get_inline.h"
 
 int led_init(void)
 {
@@ -16,4 +17,9 @@ int led_fancy_blink(void)
 	variadic_module_get(2, "%d %s", &a, string, NULL);
 
 	return 0;
+}
+
+void led_light_up(void)
+{
+	get_inline(1);
 }
