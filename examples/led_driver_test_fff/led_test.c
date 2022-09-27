@@ -10,6 +10,7 @@ DEFINE_FFF_GLOBALS;
 
 FAKE_VALUE_FUNC(int, gpio_init);
 FAKE_VALUE_FUNC_VARARG(int, variadic_module_get, uint8_t, const char *, ...);
+FAKE_VOID_FUNC(variadic_module_init)
 
 static int variadic_module_get_that_gets_1_and_one(uint8_t count, const char *fmt, va_list args)
 {
@@ -36,6 +37,7 @@ void setUp(void)
 {
 	RESET_FAKE(gpio_init);
 	RESET_FAKE(variadic_module_get);
+	RESET_FAKE(variadic_module_init);
 }
 
 void tearDown(void)
@@ -43,7 +45,7 @@ void tearDown(void)
 	/* Do nothing. */
 }
 
-void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
+static void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
 {
 	gpio_init_fake.return_val = 0;
 
@@ -52,19 +54,26 @@ void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(void)
 	TEST_ASSERT_EQUAL(1, gpio_init_fake.call_count);
 }
 
-void test_when_gpio_init_returns_failure_led_init_returns_failure(void)
+static void test_when_gpio_init_returns_failure_led_init_returns_failure(void)
 {
 	gpio_init_fake.return_val = -1;
 
 	TEST_ASSERT_EQUAL(-1, led_init());
 }
 
-void test_when_led_fancy_blink_is_called_variadic_module_get_is_called(void)
+/* Two tests to demonstrate that we can split a big test to two small tests if need be. */
+static void test_when_led_fancy_blink_is_called_variadic_module_get_is_called(void)
 {
 	variadic_module_get_fake.custom_fake = variadic_module_get_that_gets_1_and_one;
 
 	TEST_ASSERT_EQUAL(0, led_fancy_blink());
 	TEST_ASSERT_EQUAL(1, variadic_module_get_fake.call_count);
+}
+
+static void test_when_led_fancy_blink_is_called_variadic_module_init_is_called(void)
+{
+	TEST_ASSERT_EQUAL(0, led_fancy_blink());
+	TEST_ASSERT_EQUAL(1, variadic_module_init_fake.call_count);
 }
 
 int main(void)
@@ -74,6 +83,7 @@ int main(void)
 	RUN_TEST(test_when_led_init_is_called_it_calls_gpio_init_and_returns_success);
 	RUN_TEST(test_when_gpio_init_returns_failure_led_init_returns_failure);
 	RUN_TEST(test_when_led_fancy_blink_is_called_variadic_module_get_is_called);
+	RUN_TEST(test_when_led_fancy_blink_is_called_variadic_module_init_is_called);
 
 	return UNITY_END();
 }

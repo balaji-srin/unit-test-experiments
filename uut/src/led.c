@@ -12,6 +12,7 @@ int led_fancy_blink(void)
 	int a;
 	char string[] = "FILL";
 
+	variadic_module_init();
 	variadic_module_get(2, "%d %s", &a, string, NULL);
 
 	return 0;
