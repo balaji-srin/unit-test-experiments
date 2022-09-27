@@ -10,7 +10,8 @@ DEFINE_FFF_GLOBALS;
 
 FAKE_VALUE_FUNC(int, gpio_init);
 FAKE_VALUE_FUNC_VARARG(int, variadic_module_get, uint8_t, const char *, ...);
-FAKE_VOID_FUNC(variadic_module_init)
+FAKE_VOID_FUNC(variadic_module_init);
+FAKE_VALUE_FUNC(int, get_inline, int)
 
 static int variadic_module_get_that_gets_1_and_one(uint8_t count, const char *fmt, va_list args)
 {
@@ -76,6 +77,14 @@ static void test_when_led_fancy_blink_is_called_variadic_module_init_is_called(v
 	TEST_ASSERT_EQUAL(1, variadic_module_init_fake.call_count);
 }
 
+/* Test that demonstrates mocking inline functions. */
+static void test_when_led_light_up_is_called_the_get_inline_set_is_called(void)
+{
+	led_light_up();
+	TEST_ASSERT_EQUAL(1, get_inline_fake.call_count);
+	TEST_ASSERT_EQUAL(1, get_inline_fake.arg0_val);
+}
+
 int main(void)
 {
 	UNITY_BEGIN();
@@ -84,6 +93,7 @@ int main(void)
 	RUN_TEST(test_when_gpio_init_returns_failure_led_init_returns_failure);
 	RUN_TEST(test_when_led_fancy_blink_is_called_variadic_module_get_is_called);
 	RUN_TEST(test_when_led_fancy_blink_is_called_variadic_module_init_is_called);
+	RUN_TEST(test_when_led_light_up_is_called_the_get_inline_set_is_called);
 
 	return UNITY_END();
 }
