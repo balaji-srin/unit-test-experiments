@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <stdint.h>
 
 #include "led.h"
 #include "unity.h"
@@ -10,7 +11,7 @@ DEFINE_FFF_GLOBALS;
 FAKE_VALUE_FUNC(int, gpio_init);
 FAKE_VALUE_FUNC_VARARG(int, variadic_module_get, uint8_t, const char *, ...);
 
-static int variadic_module_get_that_gets_1_and_one(uint8_t count, const char *fmt, const va_list args)
+static int variadic_module_get_that_gets_1_and_one(uint8_t count, const char *fmt, va_list args)
 {
 	char test_string[] = "one";
 
