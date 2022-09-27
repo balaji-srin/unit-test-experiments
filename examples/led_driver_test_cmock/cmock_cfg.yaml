@@ -1,4 +1,7 @@
 :cmock:
+    :plugins:
+        - :ignore_arg
+        - :return_thru_ptr
     :treat_inlines:
         :include
     :strippables:

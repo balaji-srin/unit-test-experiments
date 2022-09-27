@@ -1,4 +1,7 @@
 #include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+
 #include "gpio.h"
 #include "variadic_module.h"
 #include "get_inline.h"
@@ -22,4 +25,14 @@ int led_fancy_blink(void)
 void led_light_up(void)
 {
 	get_inline(1);
+}
+
+int led_config()
+{
+#define NAME_LEN 10
+	char name[NAME_LEN];
+
+	gpio_config(name, sizeof(name), 1, 2);
+
+	return (strcmp(name, "MagicName") == 0) ? 0 : -1;
 }
