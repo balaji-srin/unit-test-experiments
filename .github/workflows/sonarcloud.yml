@@ -62,8 +62,8 @@ jobs:
           sonar-scanner --define sonar.projectKey=balaji-nordic_unit-test-experiments \
                         --define sonar.organization=balaji-nordic \
                         --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
-                        --define sonar.exclusions="*CMakeFiles*" \
-                        --define sonar.cpd.exclusions="*CMakeFiles*" \
+                        --define sonar.exclusions="**CMakeFiles**" \
+                        --define sonar.cpd.exclusions="**CMakeFiles**" \
                         --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
                         --define sonar.cfamily.gcov.reportsPath="gcov_reports_dir"
 
