@@ -7,3 +7,6 @@
 [submodule "CMock"]
 	path = CMock
 	url = https://github.com/ThrowTheSwitch/CMock.git
+[submodule "cmocka"]
+	path = cmocka
+	url = https://gitlab.com/cmocka/cmocka.git
