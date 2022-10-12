@@ -5,6 +5,7 @@ project(UnitTestExperiments)
 include(CTest)
 
 set(CMOCK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/CMock)
+set(CMOCKA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmocka)
 
 function(cmock_manage target header_file_path)
 	# Get the file name without extension and the path
