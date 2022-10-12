@@ -5,6 +5,7 @@ This repo contains simple unit tests to demonstrate how to use the following fra
 - [CMock](https://github.com/ThrowTheSwitch/CMock)
 - [Fake Function Framework](https://github.com/meekrosoft/fff)
 - [cmocka](https://cmocka.org/)
+- [Unity](https://github.com/ThrowTheSwitch/Unity)
 
 Also contained here are some basic github workflows.
 
