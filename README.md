@@ -26,3 +26,21 @@ Here's how you build and run the unit tests.
 ### Running the tests
 
     ctest
+
+### Architecture diagram
+
+Below is the architecture diagram showing the unit under test and its dependent modules. 
+In this repo, there are tests suites that mock the dependencies and test the APIs exposed by led.h.
+The tests can be found under `examples` folder. The names of the folders indicate the mocking framework that is used.
+
+                                   +----------+
+                                   |   led.c  |   -> Unit under test
+                                   +----------+
+                                  /     |     \
+                                 /      |      \
+                                /       |       \
+                               /        |        \
+              +-----------------+  +----------+  +------------+
+              | variadic_module |  |   gpio   |  | get_inline |-> Dependencies that will be mocked
+              +-----------------+  +----------+  +------------+
+              
