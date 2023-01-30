@@ -9,8 +9,22 @@ on:
 
 
 jobs:
+  get_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      docker_img_version: ${{ steps.get_vars.outputs.docker_image_version }}
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Echo vars
+      id: get_vars
+      run: |
+        cat .github/variables/docker_image_version >> $GITHUB_OUTPUT
+
   build:
     runs-on: ubuntu-latest
+    needs: get_vars
+    container: headerfile/bc-docker:${{needs.get_vars.outputs.docker_img_version}}
 
     steps:
     - uses: actions/checkout@v3
