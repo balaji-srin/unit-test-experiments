@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: get_vars
-    #container: headerfile/bc-docker:${{needs.get_vars.outputs.docker_img_version}}
+    container: headerfile/bc-docker:${{needs.get_vars.outputs.docker_img_version}}
 
     steps:
     - name: Echo
