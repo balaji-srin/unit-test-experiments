@@ -34,6 +34,14 @@ static int variadic_module_get_that_gets_1_and_one(uint8_t count, const char *fm
 
 	return 0;
 }
+#define SIZE_OF_ARRAY 2
+int array[SIZE_OF_ARRAY];
+
+int insert_in_array(int pos)
+{
+	array[pos] = 1;
+	return 0;
+}
 
 void setUp(void)
 {
@@ -52,6 +60,7 @@ static void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(
 	gpio_init_fake.return_val = 0;
 
 	TEST_ASSERT_EQUAL(0, led_init());
+	insert_in_array(1);
 
 	TEST_ASSERT_EQUAL(1, gpio_init_fake.call_count);
 }

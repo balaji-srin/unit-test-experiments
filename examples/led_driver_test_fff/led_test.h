@@ -1,0 +1,1 @@
+int insert_in_array(int pos);
