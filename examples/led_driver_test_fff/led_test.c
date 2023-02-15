@@ -60,7 +60,7 @@ static void test_when_led_init_is_called_it_calls_gpio_init_and_returns_success(
 	gpio_init_fake.return_val = 0;
 
 	TEST_ASSERT_EQUAL(0, led_init());
-	insert_in_array(1);
+	insert_in_array(4);
 
 	TEST_ASSERT_EQUAL(1, gpio_init_fake.call_count);
 }
