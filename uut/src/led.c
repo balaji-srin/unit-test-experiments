@@ -8,7 +8,14 @@
 
 int led_init(void)
 {
-	return gpio_init();
+	if (gpio_init() == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
 }
 
 int led_fancy_blink(void)
