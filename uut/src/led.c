@@ -8,10 +8,7 @@
 
 int led_init(void)
 {
-	if (gpio_init() == 0)
-	{
-		return 0;
-	}
+
 	return gpio_init();
 }
 
