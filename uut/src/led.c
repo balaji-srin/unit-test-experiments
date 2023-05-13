@@ -8,7 +8,6 @@
 
 int led_init(void)
 {
-	int i = 0;
 	return gpio_init();
 }
 
