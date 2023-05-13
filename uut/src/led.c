@@ -14,7 +14,7 @@ int led_init(void)
 	}
 	else
 	{
-		return 1;
+		return gpio_init() ;
 	}
 }
 
