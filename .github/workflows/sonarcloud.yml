@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  pull_request_target:
+
 jobs:
   build:
     name: Build
@@ -13,8 +13,16 @@ jobs:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+        if : github.event_name == 'pull_request_target'
+        with:
+          ref: ${{ github.event.pull_request.head.sha  }} # Checkout the PR's head sha instead of the target branch's sha
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v2
+        if : github.event_name != 'pull_request_target'
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 11
@@ -54,10 +62,27 @@ jobs:
           cd gcov_reports_dir
           find .. -name '*.o' | xargs gcov --preserve-paths
           cd ..
-      - name: Run sonar-scanner
+      - name: Run sonar-scanner on PR
+        if : github.event_name == 'pull_request_target'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          sonar-scanner --define sonar.projectKey=balaji-nordic_unit-test-experiments \
+                        --define sonar.organization=balaji-nordic \
+                        --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
+                        --define sonar.exclusions="**CMakeFiles**" \
+                        --define sonar.cpd.exclusions="**CMakeFiles**" \
+                        --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
+                        --define sonar.cfamily.gcov.reportsPath="gcov_reports_dir" \
+                        --define sonar.scm.revision=${{ env.HEAD_SHA }} \
+                        --define sonar.pullrequest.key=${{ env.PR_NUMBER }} \
+                        --define sonar.pullrequest.branch=${{ env.PR_BRANCH }} \
+                        --define sonar.pullrequest.base=${{ env.BASE_REF }}
+      - name: Run sonar-scanner
+        if : github.event_name != 'pull_request_target'
         run: |
           sonar-scanner --define sonar.projectKey=balaji-nordic_unit-test-experiments \
                         --define sonar.organization=balaji-nordic \
@@ -66,4 +91,3 @@ jobs:
                         --define sonar.cpd.exclusions="**CMakeFiles**" \
                         --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
                         --define sonar.cfamily.gcov.reportsPath="gcov_reports_dir"
-
