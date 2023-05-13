@@ -12,10 +12,7 @@ int led_init(void)
 	{
 		return 0;
 	}
-	else
-	{
-		return gpio_init();
-	}
+	return gpio_init();
 }
 
 int led_fancy_blink(void)
