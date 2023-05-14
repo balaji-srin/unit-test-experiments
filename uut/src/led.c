@@ -16,7 +16,7 @@ int led_off(void)
 	char * dst;
 	char * src = "asd";
 	
-	strcpy(dst, src, strlen(src));
+	strncpy(dst, src, strlen(src));
 	
 	return 0;
 }
