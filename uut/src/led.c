@@ -11,10 +11,14 @@ int led_init(void)
 	return gpio_init();
 }
 
-int *led_off(void)
+int led_off(void)
 {
-	static int a = 5;
-	return &a;
+	char * dst;
+	char * src = "asd";
+	
+	strcpy(dst, src, strlen(src));
+	
+	return 0;
 }
 
 int led_fancy_blink(void)
