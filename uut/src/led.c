@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "gpio.h"
 #include "variadic_module.h"
@@ -9,6 +10,16 @@
 int led_init(void)
 {
 	return gpio_init();
+}
+
+int led_off(void)
+{
+	char * dst = malloc(2);
+	char * src = "asd";
+	
+	strncpy(dst, src, strlen(src));
+	
+	return 0;
 }
 
 int led_fancy_blink(void)
