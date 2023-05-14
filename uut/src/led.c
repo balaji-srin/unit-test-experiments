@@ -11,6 +11,12 @@ int led_init(void)
 	return gpio_init();
 }
 
+int * led_off(void)
+{
+	int a = 5;
+	return &a;
+}
+
 int led_fancy_blink(void)
 {
 	int a;
