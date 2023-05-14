@@ -13,7 +13,7 @@ int led_init(void)
 
 int * led_off(void)
 {
-	int a = 5;
+	static int a = 5;
 	return &a;
 }
 
