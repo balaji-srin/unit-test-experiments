@@ -13,7 +13,7 @@ int led_init(void)
 
 int led_off(void)
 {
-	char * dst;
+	char * dst = malloc(2);
 	char * src = "asd";
 	
 	strncpy(dst, src, strlen(src));
