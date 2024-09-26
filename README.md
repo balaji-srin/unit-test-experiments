@@ -1,4 +1,4 @@
-# Experiments with unit tests for embedded software
+cd# Experiments with unit tests for embedded software
 
 This repo contains simple unit tests to demonstrate how to use the following frameworks for unit-testing embedded applications.
 
@@ -15,6 +15,11 @@ Also contained here are some basic github workflows.
 
 Here's how you build and run the unit tests.
 
+## Initialize git submodules (first time only)
+
+    git submodule init
+    git submodule update
+
 ## Cmake Configure
 
     cmake .
@@ -29,7 +34,7 @@ Here's how you build and run the unit tests.
 
 ### Architecture diagram
 
-Below is the architecture diagram showing the unit under test and its dependent modules. 
+Below is the architecture diagram showing the unit under test and its dependent modules.
 In this repo, there are tests suites that mock the dependencies and test the APIs exposed by led.h.
 The tests can be found under `examples` folder. The names of the folders indicate the mocking framework that is used.
 
@@ -43,4 +48,4 @@ The tests can be found under `examples` folder. The names of the folders indicat
               +-----------------+  +----------+  +------------+
               | variadic_module |  |   gpio   |  | get_inline |-> Dependencies that will be mocked
               +-----------------+  +----------+  +------------+
-              
+
