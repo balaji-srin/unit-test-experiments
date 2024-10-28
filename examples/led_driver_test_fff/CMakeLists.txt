@@ -21,7 +21,10 @@ add_custom_target(
 	DEPENDS led_driver_test_fff
 	COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_fff
 )
-
+target_compile_options(led_driver_test_fff PRIVATE "-fexperimental-new-pass-manager")
+target_compile_options(led_driver_test_fff PRIVATE "-fpass-plugin=/usr/lib/mull-ir-frontend-14")
+target_compile_options(led_driver_test_fff PRIVATE "-grecord-command-line")
+target_compile_options(led_driver_test_fff PRIVATE "-g")
 target_link_options(led_driver_test_fff PRIVATE "--coverage")
 
 add_test(NAME led_driver_test_fff COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_fff)
