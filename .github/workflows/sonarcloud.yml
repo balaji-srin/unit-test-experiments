@@ -57,6 +57,7 @@ jobs:
         run: |
           ctest .
       - name: Generate Gcov files
+        continue-on-error: true
         run: |
           mkdir gcov_reports_dir
           cd gcov_reports_dir
