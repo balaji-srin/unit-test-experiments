@@ -11,14 +11,14 @@ execute_process(
 	COMMAND
 	cmake -B ${CMAKE_BINARY_DIR}/cmocka_build
 	WORKING_DIRECTORY ${CMOCKA_DIR}/
-	)
+)
 
 # Build libcmocka.so
 execute_process(
 	COMMAND
 	make cmocka
 	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/cmocka_build
-	)
+)
 
 add_executable(led_driver_test_cmocka led_test.c)
 
@@ -39,3 +39,5 @@ add_test(NAME led_driver_test_cmocka COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_dri
 # Include the normalized_get_inline.h so that the inline function get declared as normal function
 set_property(SOURCE ${WORKSPACE_ROOT}/uut/src/led.c
 	PROPERTY COMPILE_FLAGS "-include ${CMAKE_CURRENT_SOURCE_DIR}/normalized_get_inline.h")
+
+add_custom_target(mutate COMMAND mull-runner-14 led_driver_test_fff)

@@ -29,3 +29,5 @@ add_test(NAME led_driver_test_fff COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver
 # Include the normalized_get_inline.h so that the inline function get declared as normal function
 set_property(SOURCE ${WORKSPACE_ROOT}/uut/src/led.c
 	PROPERTY COMPILE_FLAGS "-include ${CMAKE_CURRENT_SOURCE_DIR}/normalized_get_inline.h")
+
+add_custom_target(mutate COMMAND mull-runner-14 led_driver_test_fff)

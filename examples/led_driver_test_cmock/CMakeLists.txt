@@ -9,6 +9,7 @@ set(CMOCK_DIR ${WORKSPACE_ROOT}/CMock)
 function(cmock_manage target header_file_path)
 	# Get the file name without extension and the path
 	get_filename_component(file_to_mock ${header_file_path} NAME_WE)
+
 	# Create a rule to make the mocked implementation
 	add_custom_command(
 		OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mocks/mock_${file_to_mock}.c
@@ -21,6 +22,7 @@ function(cmock_manage target header_file_path)
 		--mock_path=${CMAKE_CURRENT_BINARY_DIR}/mocks
 		DEPENDS ${CMAKE_CURRENT_LIST_DIR}/cmock_cfg.yaml ${header_file_path}
 	)
+
 	# Include the above generated file to the target
 	target_sources(${target} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/mocks/mock_${file_to_mock}.c)
 
@@ -31,7 +33,6 @@ function(cmock_manage target header_file_path)
 	target_sources(${target} PRIVATE ${CMOCK_DIR}/src/cmock.c)
 	target_include_directories(${target} PRIVATE ${CMOCK_DIR}/src)
 endfunction()
-
 
 add_executable(led_driver_test_cmock led_test.c)
 
@@ -49,3 +50,5 @@ target_sources(led_driver_test_cmock PRIVATE ${WORKSPACE_ROOT}/Unity/src/unity.c
 target_link_options(led_driver_test_cmock PRIVATE "--coverage")
 
 add_test(NAME led_driver_test_cmock COMMAND ${CMAKE_CURRENT_BINARY_DIR}/led_driver_test_cmock)
+
+add_custom_target(mutate COMMAND mull-runner-14 led_driver_test_fff)
